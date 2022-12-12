@@ -86,9 +86,34 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void checkApple(){
+        //Checks if head collides with body
+        for(int i = bodyParts;i>0;i--){
+            if((x[0]==x[i]) && (y[0] == y[i])){
+                running = false;
+            }
+        }
+        //Check if head touches right boreder
+        if(x[0] < 0){
+            running = false;
+        }
+        //Check if head touches right boreder
+        if(x[0] > SCREEN_WIDTH){
+            running = false;
+        }
+        //Check if head touches top boreder
+        if(y[0] < 0){
+            running = false;
+        }
+        //Check if head touches bottom boreder
+        if(y[0] > SCREEN_WIDTH){
+            running = false;
+        }
+        if(!running){
+            timer.stop();
+        }
 
     }
-    public void chechCollisions(){
+    public void checkCollisions(){
 
     }
     public void gameOver(Graphics g){
@@ -98,6 +123,12 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e){
 
+        if(running) {
+            move();
+            checkApple();
+            checkCollisions();
+        }
+        repaint();
     }
 
     public class MyKeyAdapter extends KeyAdapter{
